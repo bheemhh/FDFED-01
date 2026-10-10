@@ -1,0 +1,14 @@
+The application should display three scientist profiles, where each profile has a different name, image, and short description. Pass the scientist information to the Profile component using props, instead of hard-coding the information inside the component.
+
+Exercise: Student Information Component
+
+Create a React component called StudentInfo that demonstrates basic JavaScript concepts inside a React component.
+
+The component should:
+Store a student's name using let and roll number using const.
+Create a welcome message using a template literal.
+Create and call an arrow function that returns a greeting.
+Use let for a grade variable and modify its value based on the student's roll number.
+Display the student name, roll number, welcome message, greeting, and grade on the webpage.
+
+Objective: Practice let, const, template literals, arrow functions, reassignment, and conditional statements in a React component.

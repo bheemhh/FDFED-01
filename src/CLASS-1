@@ -1,0 +1,32 @@
+1. React App
+2. why we use Async and wait
+3. React Page JSX
+4. React State 
+5. Components.
+6. Prop and 
+
+import { useState } from "react";
+
+export default function App() {
+
+  const [present, setPresent] =useState(0);
+  
+   const [absent, setAbsent] =useState(0);
+  const total_p=50;
+  function markPresent() {
+
+         setPresent(present + 1)
+  
+  }
+
+  return (
+    <div>
+      <h1>total_p: {total_p}</h1>
+      <h1>absent: {present}</h1>
+      <h1>Present: {present}</h1>
+      <button onClick={setPresent(present + 1)}>Mark Present</button>
+    </div>
+  );
+}
+
+
