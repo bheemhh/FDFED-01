@@ -1,13 +1,30 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
-export default function App() {
+function App() {
+
+  const [name, setName] = useState("");
+  const [pass, setPass] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("name", name);
+  },[name]);
 
   
+  
   return (
-    <div>
-      <h1> Hello React [f1] </h1>
-    </div>
+    <form>
+      <input name="username" value={name} onChange={(e) => setName(e.target.value)} />
+      <input name="Password" value={pass} onChange={(e) => setPass(e.target.value)} />
+
+      <button type="submit">
+        Submit
+      </button>
+    </form>
   );
-}
 
 
+
+  
+  }
+
+export default App;

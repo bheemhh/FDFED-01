@@ -1,0 +1,72 @@
+import { useState } from "react";
+
+function Greeting ({Name})
+{
+
+  const a='Joy';
+
+  return (
+   <h1> Hello {Name} </h1> 
+  );
+}
+
+function Profile ({Name,Age})
+{
+
+return(
+<div> 
+    <img
+      className="avatar"
+      src="https://react.dev/images/docs/scientists/1bX5QH6.jpg"
+      alt="Lin Lanying"
+      width={100}
+      height={100}
+    />
+       <h1> {Name} </h1>
+ 
+    <h1> {Age} </h1>
+    <Greeting Name={Name}/>
+    
+</div>
+
+  );
+
+}
+
+
+
+
+export default function App() {
+
+const [Present, setPresent]= useState(0);
+
+const [Absent, setAbsent]= useState(50);
+ 
+const totalcount=51;
+
+function MarkPresent()
+{
+  
+     setPresent(Present +1);
+    setAbsent (Absent -1);
+}
+
+  return (
+    <div>
+     <div> <h1> Hello React [f1] {Present} and {Absent} </h1>
+     <button onClick={MarkPresent}> Click Present</button>
+      </div> 
+           <Profile />
+    <Profile  Name="Joy" Age="23"/>
+    <Profile  Name="Alice" Age="33"/>
+    <Profile  Name="Bob" Age="24"/>
+    
+    <Profile />
+    <Profile />
+    <Profile />
+    
+   </div>
+  );
+}
+
+

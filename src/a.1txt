@@ -1,0 +1,105 @@
+I don't want the Submit button enabled until the username has at least 5 characters
+
+
+<button disabled>
+  Submit
+</button>
+
+
+
+
+
+
+
+
+
+API call
+Timer
+WebSocket connection
+Event listener
+Browser DOM manipulation
+Local storage
+Fetching data
+
+useEffect
+
+
+
+
+function Profile() {
+  const [name, setName] = useState("");
+
+  localStorage.setItem("name", name);
+
+  return (
+    <input
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+    />
+  );
+}
+
+
+
+import { useEffect, useState } from "react";
+
+function Profile() {
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("name", name);
+  },);
+
+  return (
+    <input
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+    />
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Why shouldn't we put an API call directly inside the component body?
+
+function App() {
+
+   fetch("/api/users");   
+   return <Users />;
+}
+
+
+
+useEffect(() => {
+   fetch("/api/users");
+}, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button disabled={username.length < 5}>
+  Submit
+</button>

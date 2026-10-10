@@ -39,6 +39,7 @@ function WelcomeCard({ name, score }) {
       <h1>Welcome back, {name}!</h1>
       <p>Your current score is: {score}</p>
     </div>
+    <Profile />
   );
 }
 
@@ -317,3 +318,251 @@ async and wait fetch
         </div>
       );
       `
+
+
+      Exercise 1 – Props: Student Profile
+
+Create a React application with a parent component and a child component. Define student details in the parent component and pass them to the child component using props. The child component should display the student’s name, roll number, department, and year. The student details should be changed only in the parent component and the updated information should be reflected in the child component.
+
+Exercise 2 – Callback: Child to Parent Communication
+
+Create a React application with a parent component and a child form component. The child component should contain a text box to enter a student’s name and a Submit button. When the user submits the name, the child component should send the entered value to the parent component using a callback function passed through props. The parent component should then display the received student name.
+
+Exercise 3 – Lift State Up: Shared State
+
+Create a React application with a parent component and two child components: Counter and Display. The parent component should maintain the count as state. The Counter component should provide Increase and Decrease buttons, while the Display component should show the current count. The state should be maintained only in the common parent, and the child components should receive the required data and functions through props.
+```python
+import { useState } from "react";
+
+function App() {
+  const [name, setName] = useState("");
+
+  function receiveName(studentName) {
+    setName(studentName);
+  }
+
+  return (
+    <div>
+      <StudentForm onSubmit={receiveName} />
+
+      <h2>Student Name: {name}</h2>
+    </div>
+  );
+}
+
+import { useState } from "react";
+
+function StudentForm({ onSubmit }) {
+  const [input, setInput] = useState("");
+
+  return (
+    <div>
+      <input
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+
+      <button onClick={() => onSubmit(input)}>
+        Submit
+      </button>
+    </div>
+  );
+}
+
+<StudentForm onSubmit={receiveName} />
+onSubmit(input)
+
+
+import { useState } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  function increase() {
+    setCount(count + 1);
+  }
+
+  function decrease() {
+    setCount(count - 1);
+  }
+
+  return (
+    <div>
+      <Counter
+        onIncrease={increase}
+        onDecrease={decrease}
+      />
+
+      <Display count={count} />
+    </div>
+  );
+}
+function Counter({ onIncrease, onDecrease }) {
+  return (
+    <div>
+      <button onClick={onIncrease}>
+        Increase
+      </button>
+
+      <button onClick={onDecrease}>
+        Decrease
+      </button>
+    </div>
+  );
+}
+function Display({ count }) {
+  return <h2>Count: {count}</h2>;
+}
+
+
+```
+
+
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  const changeCount = (value) => {
+    setCount(value);
+  };
+
+  return (
+    <>
+      <h2>Count: {count}</h2>
+      <Child onChange={changeCount} />
+    </>
+  );
+}
+
+function Child({ onChange }) {
+  return (
+    <button onClick={() => onChange(10)}>
+      Set Parent Count to 10
+    </button>
+  );
+}
+
+
+```
+class - Use Context
+
+import { useState } from "react";
+
+function AttendanceSummary({ present, totalStudents }) {
+  const absent = totalStudents - present;
+
+  return (
+    <div>
+      <h2>Present: {present}</h2>
+      <h2>Absent: {absent}</h2>
+    </div>
+  );
+}
+
+function PresentButton({ onMarkPresent }) {
+  return (
+    <button onClick={onMarkPresent}>
+      Mark Present
+    </button>
+  );
+}
+
+export default function App() {
+  const totalStudents = 30;
+  const [present, setPresent] = useState(0);
+
+  function markPresent() {
+    if (present < totalStudents) {
+      setPresent(present + 1);
+    }
+  }
+
+  return (
+    <div style={{ padding: "30px" }}>
+      <h1>Classroom Attendance</h1>
+
+      <AttendanceSummary
+        present={present}
+        totalStudents={totalStudents}
+      />
+
+      <PresentButton onMarkPresent={markPresent} />
+    </div>
+  );
+}
+
+
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState
+} from "react";
+
+// 1. Create a Context
+const AttendanceContext = createContext(null);
+
+// 2. Child component: reads shared data
+function AttendanceSummary() {
+  const { className, present, totalStudents } =
+    useContext(AttendanceContext);
+
+  const absent = totalStudents - present;
+
+  return (
+    <div>
+      <h2>Class: {className}</h2>
+      <h2>Present: {present}</h2>
+      <h2>Absent: {absent}</h2>
+    </div>
+  );
+}
+
+// 3. Child component: reads the shared function
+function MarkPresentButton() {
+  const { markPresent } = useContext(AttendanceContext);
+
+  return (
+    <button onClick={markPresent}>
+      Mark Present
+    </button>
+  );
+}
+
+// 4. Parent component: owns the state
+export default function App() {
+  const className = "FDFED-01";
+  const totalStudents = 30;
+
+  const [present, setPresent] = useState(0);
+
+  function markPresent() {
+    if (present < totalStudents) {
+      setPresent(present + 1);
+    }
+  }
+
+  // 5. Runs after the screen updates
+  useEffect(() => {
+    document.title = `Present: ${present}`;
+  }, [present]);
+
+  // 6. Data shared with all components inside Provider
+  const attendanceData = {
+    className,
+    totalStudents,
+    present,
+    markPresent
+  };
+
+  return (
+    <AttendanceContext.Provider value={attendanceData}>
+      <div style={{ padding: "30px" }}>
+        <h1>Attendance Context API Demo</h1>
+
+        <AttendanceSummary />
+
+        <MarkPresentButton />
+      </div>
+    </AttendanceContext.Provider>
+  );
+}
